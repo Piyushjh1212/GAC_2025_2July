@@ -1,0 +1,39 @@
+import React, { useContext, useEffect } from "react";
+import "../Styles/Home.css";
+import { GacContext } from "../Context/GacContext";
+import About from "./About";
+import Courses from "./Courses";
+import ContactForm from "./Contact";
+
+
+export default function Home() {
+    const { user, loading } = useContext(GacContext);
+
+    console.log(user);
+
+  return (
+    <>
+      <section className="Home_section">
+        <div className="Home_main_Container">
+          <div className="Home_main_container_2">
+            <h1 className="home-title">
+              Welcome to <span className="brand-name">GrowAllCoaching</span>, an
+              Online Learning Platform
+            </h1>
+            <p className="home-description">
+              Unlock your potential with expert-led courses, interactive
+              lessons, and a supportive community to help you achieve your
+              learning goals.
+            </p>
+            <button className="home-explore-btn">Explore Courses</button>
+          </div>
+        </div>
+      </section>
+      <main>
+        <About />
+        <Courses />
+        <ContactForm />
+      </main>
+    </>
+  );
+}

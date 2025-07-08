@@ -18,7 +18,7 @@ app.use(express.json());
 // Api callback
 
 app.use("/auth", AuthUserRoutes);
-app.use("/Course", CourseRoutes)
+app.use("/api/v1/", CourseRoutes)
 
 
 app.get('/', (req, res) => {

@@ -5,6 +5,7 @@ import Dashboard from "./Pages/Dashboard";
 import Header from "./Component/Header";
 import Users from "./Pages/Users";
 import Sidebar from "./Component/Sidebar";
+import Courses from "./Pages/Courses";
 
 export default function App() {
   return (
@@ -16,10 +17,10 @@ export default function App() {
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/users" element={<Users />} />
-            {/* <Route path="/courses" element={<Courses />} />
-            <Route path="/revenue" element={<Revenue />} />
-            <Route path="/support" element={<Support />} />
-            <Route path="/settings" element={<Settings />} /> */}
+            <Route path="/courses" element={<Courses/>} />
+            {/* // <Route path="/revenue" element={<Revenue />} />
+            // <Route path="/support" element={<Support />} />
+            // <Route path="/settings" element={<Settings />} />  */}
           </Routes>
         </div>
       </div>

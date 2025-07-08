@@ -1,7 +1,7 @@
 /* Layout Container */
 .admin-layout {
   display: flex;
-  min-height: 100vh;
+  height: 100vh;
   font-family: 'Segoe UI', sans-serif;
   background-color: #f4f6f8;
 }

@@ -9,8 +9,8 @@ export default function Sidebar() {
         <ul>
           <li><Link to="/">Dashboard</Link></li>
           <li><Link to="/users">Users</Link></li>
-          {/* <li><Link to="/courses">Courses</Link></li>
-          <li><Link to="/revenue">Revenue</Link></li>
+          <li><Link to="/courses">Courses</Link></li>
+          {/* <li><Link to="/revenue">Revenue</Link></li>
           <li><Link to="/support">Support</Link></li>
           <li><Link to="/settings">Settings</Link></li> */}
         </ul>

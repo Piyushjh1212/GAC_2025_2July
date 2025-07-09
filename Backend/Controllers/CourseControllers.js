@@ -1,4 +1,4 @@
-import Courses from "../Modals/CourseModle";
+import Courses from "../Modals/CourseModle.js";
 
 
 // Add multiple courses

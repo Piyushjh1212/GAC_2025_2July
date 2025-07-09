@@ -64,20 +64,19 @@ const CourseSection = () => {
     window.location.href = "/Course-Checkout"
   }
 
-  useEffect(()=> {
-    const fetchCourses = async () =>{
+  useEffect(() => {
+    const fetchCourses = async () => {
       try {
-        const response = await fetch("");
+        const response = await fetch(import.meta.env.VITE_BACKEND_API_URL + "/api/v1/Get-Courses");
         const data = await response.json();
         SetCourses(data);
       } catch (error) {
         console.error("Error fetching courses:", error);
       }
-    }
+    };
 
     fetchCourses();
   }, []);
-
 
   return (
     <section className="course-section">
@@ -100,7 +99,7 @@ const CourseSection = () => {
 
       <div className="course-card-container">
         {filteredCourses.map((course) => (
-          <div key={course.id} className="course-card">
+          <div key={course._id} className="course-card">
             <img src={course.image} alt={course.title} className="course-image" />
 
             <div className="course-info">

@@ -2,50 +2,6 @@ import React, { useEffect, useState } from "react";
 import { FaStar, FaArrowRight } from "react-icons/fa";
 import "../Styles/Course.css";
 
-// const courses = [
-//   {
-//     id: 1,
-//     tag: "Best Seller",
-//     title: "Extream HTML and CSS ",
-//     subtitle: "HTML and CSS",
-//     category: "Development",
-//     price: "47.00",
-//     oldPrice: "$75.5",
-//     rating: 4.9,
-//     reviews: 25,
-//     lessons: "12 Lessons",
-//     instructor: "Liza Daniel",
-//     image: "https://image.shutterstock.com/image-photo/happy-relaxed-young-woman-sitting-260nw-2228645295.jpg",
-//   },
-//   {
-//     id: 2,
-//     tag: "Best Seller",
-//     title: "Javascript",
-//     subtitle: "Master Javascript",
-//     category: "Development",
-//     price: "49.00",
-//     oldPrice: "$71.5",
-//     rating: 4.9,
-//     reviews: 28,
-//     lessons: "11 Lessons",
-//     instructor: "Mark Hanry",
-//     image: "https://image.shutterstock.com/image-photo/happy-relaxed-young-woman-sitting-260nw-2228645295.jpg",
-//   },
-//   {
-//     id: 3,
-//     tag: "Best Seller",
-//     title: "Professional Email Writing",
-//     subtitle: "Write Better Emails: Tactics for Smarter Communication",
-//     category: "Business",
-//     price: "FREE",
-//     oldPrice: "",
-//     rating: 4.8,
-//     reviews: 34,
-//     lessons: "13 Lessons",
-//     instructor: "Junior Lucy",
-//     image: "https://gratisography.com/wp-content/uploads/2025/03/gratisography-cruising-cat-800x525.jpg",
-//   },
-// ];
 
 const CourseSection = () => {
 
@@ -60,7 +16,8 @@ const CourseSection = () => {
       : Courses.filter((course) => course.category === selectedCategory);
     
 
-  const HandleEnrollCourse = () => {
+  const HandleEnrollCourse = (course) => {
+    localStorage.setItem("selectedCourse", JSON.stringify(course));
     window.location.href = "/Course-Checkout"
   }
 
@@ -125,7 +82,7 @@ const CourseSection = () => {
 
             <div className="course-footer">
               <span className="instructor">{course.instructor}</span>
-              <span className="view-details" onClick={HandleEnrollCourse}>
+              <span className="view-details" onClick={() => HandleEnrollCourse(course)}>
                 Enroll Now <FaArrowRight size={12} />
               </span>
             </div>

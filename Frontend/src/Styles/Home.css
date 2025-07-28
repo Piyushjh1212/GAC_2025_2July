@@ -11,4 +11,26 @@
   align-items: center;
 }
 
+.home-explore-btn{
+   padding: 12px 28px;
+    background: linear-gradient(to bottom, #141e30ec, #243B55); 
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
 
+.home-explore-btn:hover{
+  background-color: #243B55; /* Darker indigo */
+  box-shadow: 0 6px 18px rgb(36, 59, 85);
+  transform: translateY(-2px);
+}
+
+
+.home-explore-btn:active {
+  transform: scale(0.98);
+  box-shadow: 0 2px 8px rgb(36, 59, 85);
+}

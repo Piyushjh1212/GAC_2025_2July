@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from "react";
 import "../Styles/Checkout.css";
 
-
 export default function Checkout() {
   const storedCourse = localStorage.getItem("selectedCourse");
   const Course = storedCourse ? JSON.parse(storedCourse) : null;
 
-if (!Course) {
-  return <div style={{ padding: "2rem", textAlign: "center" }}>Loading course details...</div>;
-}
+  if (!Course) {
+    return (
+      <div style={{ padding: "2rem", textAlign: "center" }}>
+        Loading course details...
+      </div>
+    );
+  }
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -48,13 +51,89 @@ if (!Course) {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const HandlePaymentSubmit = async (e) => {
     e.preventDefault();
     console.log("Form submitted:", formData);
-    alert("Processing enrollment... Please wait for confirmation.");
+    try {
+      const response = await fetch(
+        import.meta.env.VITE_BACKEND_API_URL + "/api/v1/Get-Courses",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify({
+            ...formData,
+            productId: product._id,
+            PromoCode: promoCode,
+          }),
+        }
+      );
+      if (!OrderResponse.ok) throw new Error("Something went wrong");
+
+      const data = await OrderResponse.json();
+      if (!data.success) {
+        alert(data.message);
+        return;
+      }
+
+      const options = {
+        key: import.meta.env.VITE_RAZORPAY_KEY_ID,
+        amount: data.order.amount,
+        currency: "INR",
+        name: "Growall Coaching",
+        description: "Course Purchase",
+        order_id: data.order.id,
+        handler: async function (response) {
+          try {
+            const verifyRes = await fetch(
+              `${
+                import.meta.env.VITE_BACKEND_URL
+              }/api/v1/razorpay/verify-order`,
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                credentials: "include",
+                body: JSON.stringify({
+                  razorpay_payment_id: response.razorpay_payment_id,
+                  razorpay_order_id: response.razorpay_order_id,
+                  razorpay_signature: response.razorpay_signature,
+                }),
+              }
+            );
+
+            const verifyData = await verifyRes.json();
+            if (verifyData.success) {
+              alert("✅ Payment Verified & Order Completed!");
+            } else {
+              alert("❌ Payment verification failed: " + verifyData.message);
+            }
+          } catch (err) {
+            console.error("Verification error", err);
+            alert("Error verifying payment");
+          }
+        },
+
+        prefill: {
+          name: formData.name,
+          email: formData.email,
+          contact: formData.phone,
+        },
+        theme: {
+          color: "#3399cc",
+        },
+      };
+
+      const rzp = new window.Razorpay(options);
+      rzp.open();
+    } catch (error) {
+      console.error("Payment failed", error);
+      alert("Payment initiation failed. Try again.");
+    }
   };
-
-
 
   return (
     <div className="Course-checkout-Container">
@@ -64,7 +143,7 @@ if (!Course) {
             <div className="accreditation-badge">ACCREDITED PROGRAM</div>
             <h2>{Course?.subtitle || "Course Subtitle Coming Soon"}</h2>
             <p className="course-code">
-             {Course.category} | Duration: 6 Months
+              {Course.category} | Duration: 6 Months
             </p>
 
             <div className="price-section">
@@ -233,7 +312,7 @@ if (!Course) {
           </div>
         </div>
 
-        <form className="checkout-form" onSubmit={handleSubmit}>
+        <form className="checkout-form" onSubmit={HandlePaymentSubmit}>
           <div className="form-header">
             <h2>SECURE ENROLLMENT FORM</h2>
             <p className="enrollment-notice">
@@ -354,7 +433,9 @@ if (!Course) {
           </div>
 
           <button type="submit" className="checkout-button">
-            <span className="button-text">SECURE ENROLLMENT - ₹{Course.price}</span>
+            <span className="button-text">
+              SECURE ENROLLMENT - ₹{Course.price}
+            </span>
             <svg
               className="button-arrow"
               viewBox="0 0 20 20"

@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import AuthUserRoutes from './Routes/AuthUserRoutes.js';
 import connectDB from './ConfigDb/DB.config.js';
 import CourseRoutes from './Routes/CourseRoute.js';
+import razorPayPaymentRouter from './Routes/razorPayPaymentRouter.js';
 
 
 dotenv.config();
@@ -18,7 +19,8 @@ app.use(express.json());
 // Api callback
 
 app.use("/auth", AuthUserRoutes);
-app.use("/api/v1/", CourseRoutes)
+app.use("/api/v1", CourseRoutes);
+app.use("/api/v1", razorPayPaymentRouter)
 
 
 app.get('/', (req, res) => {
